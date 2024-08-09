@@ -1,0 +1,53 @@
+name: Modify Raspberry Pi OS Image
+
+on:
+    push: # Запуск действия при каждом пуше в репозиторий
+        branches:
+        - main
+
+jobs:
+    modify-image:
+        runs-on: ubuntu-latest # Использование последней версии Ubuntu для выполнения задач
+
+        steps:
+        - name: Checkout repository # Клонирование содержимого репозитория
+          uses: actions/checkout@v3 # Использование действия для получения кода из репозитория
+
+        - name: Create copy of base image
+          run: |
+            sudo apt-get install xz-utils
+            xz -dk *img.xz
+            mv *img raspios.img
+
+        - name: Install required packages # Установка необходимых утилит для работы с образом
+          run: sudo apt-get update && sudo apt-get install -y qemu-utils
+
+        - name: Load nbd kernel module # Загрузка модуля ядра nbd
+          run: sudo modprobe nbd max_part=8
+
+        - name: Connect the image to nbd # Подключение образа к nbd устройству
+          run: sudo qemu-nbd --connect=/dev/nbd0 raspios.img
+
+        - name: Mount the image partition # Монтирование раздела образа
+          run: sudo mount /dev/nbd0p2 /mnt
+
+        - name: Install file manager in the image # Установка файлового менеджера в образ
+          run: |
+            sudo chroot /mnt apt-get update
+            sudo chroot /mnt apt-get install -y mc
+
+        - name: Install rpi-imager # Установка Raspberry Pi imager 
+          run: |
+            sudo chroot /mnt apt install rpi-imager   
+
+        - name: Configurate image # Настройка образа 
+          run: |
+            sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
+
+        
+
+        - name: Unmount the image partition # Демонтирование раздела образа
+          run: sudo umount /mnt
+
+        - name: Disconnect the image from nbd # Отключение образа от nbd устройства
+          run: sudo qemu-nbd --disconnect /dev/nbd0
