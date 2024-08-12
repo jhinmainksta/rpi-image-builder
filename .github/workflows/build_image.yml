@@ -65,6 +65,7 @@ jobs:
         #   ошибка:
         #   fatal library error, lookup self
         #   System has not been booted with systemd as init system (PID 1). Can't operate. 
+
         - name: Setup ssh
           run: sudo touch /mnt/boot/ssh
 
@@ -74,11 +75,14 @@ jobs:
         - name: Disconnect the image from nbd # Отключение образа от nbd устройства
           run: sudo qemu-nbd --disconnect /dev/nbd0
 
+        - name: Compress image
+          run: xz raspios.img
+
         - name: deploy
           uses: softprops/action-gh-release@v1
           if: ${{ github.event_name == 'release'}}
           with:
-            files: raspios.img
+            files: raspios.img.xz
             prerelease: true
           env:
             GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
