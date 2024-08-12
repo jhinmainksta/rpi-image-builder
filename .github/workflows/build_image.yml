@@ -57,12 +57,16 @@ jobs:
           run: |
             sudo chroot /mnt apt-get update
             sudo chroot /mnt apt-get install -y mc
-            
-        - name: Configurate image # Настройка образа 
-          run: |
-            sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
-            sudo chroot /mnt raspi-config nonint do_ssh 0
-        
+
+        # - name: Configurate image # Настройка образа 
+        #   run: |
+        #     sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
+        #     sudo chroot /mnt raspi-config nonint do_ssh 0
+        #   ошибка:
+        #   fatal library error, lookup self
+        #   System has not been booted with systemd as init system (PID 1). Can't operate. 
+        - name: Setup ssh 
+          run: sudo touch /mnt/boot/ssh
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
