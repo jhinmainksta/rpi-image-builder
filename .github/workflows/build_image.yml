@@ -46,10 +46,10 @@ jobs:
         #   run: |
         #     sudo chroot /mnt apt install rpi-imager   
 
-        - name: Configurate image # Настройка образа 
-          run: |
-            sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
-            sudo chroot /mnt sudo raspi-config nonint do_ssh 0
+        # - name: Configurate image # Настройка образа 
+        #   run: |
+        #     sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
+        #     sudo chroot /mnt sudo raspi-config nonint do_ssh 0
         
 
         - name: Unmount the image partition # Демонтирование раздела образа
@@ -57,3 +57,12 @@ jobs:
 
         - name: Disconnect the image from nbd # Отключение образа от nbd устройства
           run: sudo qemu-nbd --disconnect /dev/nbd0
+
+        - name: deploy
+          uses: softprops/action-gh-release@v1
+          if: ${{ github.event_name == 'release'}}
+          with:
+            files: amogus.txt
+            prerelease: true
+          env:
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
