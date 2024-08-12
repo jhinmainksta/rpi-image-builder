@@ -24,6 +24,7 @@ jobs:
             wget https://downloads.raspberrypi.com/raspios_full_armhf/images/raspios_full_armhf-2024-07-04/2024-07-04-raspios-bookworm-armhf-full.img.xz
             sudo apt-get install xz-utils
             xz -dk *img.xz
+            mv *img raspios.img
 
         - name: Install required packages # Установка необходимых утилит для работы с образом
           run: sudo apt-get update && sudo apt-get install -y qemu-utils
