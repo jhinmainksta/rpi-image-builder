@@ -57,11 +57,7 @@ jobs:
           run: |
             sudo chroot /mnt apt-get update
             sudo chroot /mnt apt-get install -y mc
-
-        - name: Install rpi-imager # Установка Raspberry Pi imager 
-          run: |
-            sudo chroot /mnt apt-get install -y rpi-imager   
-
+            
         - name: Configurate image # Настройка образа 
           run: |
             sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
