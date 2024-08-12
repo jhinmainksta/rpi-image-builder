@@ -42,9 +42,9 @@ jobs:
         #     sudo chroot /mnt sudo apt-get update
         #     sudo chroot /mnt sudo apt-get install -y mc
 
-        - name: Install rpi-imager # Установка Raspberry Pi imager 
-          run: |
-            sudo chroot /mnt apt install rpi-imager   
+        # - name: Install rpi-imager # Установка Raspberry Pi imager 
+        #   run: |
+        #     sudo chroot /mnt apt install rpi-imager   
 
         - name: Configurate image # Настройка образа 
           run: |
