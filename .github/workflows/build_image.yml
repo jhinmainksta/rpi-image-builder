@@ -44,17 +44,17 @@ jobs:
 
         - name: Install file manager in the image # Установка файлового менеджера в образ
           run: |
-            sudo chroot /mnt/usr/bin/qemu-arm-static sudo apt-get update
-            sudo chroot /mnt/usr/bin/qemu-arm-static sudo apt-get install -y mc
+            sudo chroot /mnt /usr/bin/qemu-arm-static sudo apt-get update
+            sudo chroot /mnt /usr/bin/qemu-arm-static sudo apt-get install -y mc
 
         - name: Install rpi-imager # Установка Raspberry Pi imager 
           run: |
-            sudo chroot /mnt/usr/bin/qemu-arm-static apt install rpi-imager   
+            sudo chroot /mnt /usr/bin/qemu-arm-static apt install rpi-imager   
 
         - name: Configurate image # Настройка образа 
           run: |
-            sudo chroot /mnt/usr/bin/qemu-arm-static raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
-            sudo chroot /mnt/usr/bin/qemu-arm-static sudo raspi-config nonint do_ssh 0
+            sudo chroot /mnt /usr/bin/qemu-arm-static raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
+            sudo chroot /mnt /usr/bin/qemu-arm-static sudo raspi-config nonint do_ssh 0
         
 
         - name: Unmount the image partition # Демонтирование раздела образа
