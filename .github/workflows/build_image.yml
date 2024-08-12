@@ -6,6 +6,7 @@ on:
       - main
   release:
     types: [created]
+
 jobs:
     modify-image:
         runs-on: ubuntu-latest # Использование последней версии Ubuntu для выполнения задач
@@ -37,6 +38,9 @@ jobs:
 
         - name: Mount the image partition # Монтирование раздела образа
           run: sudo mount /dev/nbd0p2 /mnt
+
+        - name: Copy qemu tools to mounted image 
+          run: sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
 
         - name: Install file manager in the image # Установка файлового менеджера в образ
           run: |
