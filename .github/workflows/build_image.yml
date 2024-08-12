@@ -60,7 +60,7 @@ jobs:
 
         - name: Install rpi-imager # Установка Raspberry Pi imager 
           run: |
-            sudo chroot /mnt apt install -y rpi-imager   
+            sudo chroot /mnt apt-get install -y rpi-imager   
 
         - name: Configurate image # Настройка образа 
           run: |
