@@ -41,7 +41,7 @@ jobs:
 
         - name: Copy qemu tools to mounted image 
           run: |
-            sudo mv /usr/bin/qemu-arm-static /mnt/usr/bin/
+            sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
              if [ ! -f /usr/bin/qemu-arm-static ]; then
               echo "qemu-arm-static not found on host system!"
               exit 1
@@ -55,17 +55,17 @@ jobs:
 
         - name: Install file manager in the image # Установка файлового менеджера в образ
           run: |
-            sudo chroot /mnt /usr/bin/qemu-arm-static apt-get update
-            sudo chroot /mnt /usr/bin/qemu-arm-static apt-get install -y mc
+            sudo chroot /mnt apt-get update
+            sudo chroot /mnt apt-get install -y mc
 
         - name: Install rpi-imager # Установка Raspberry Pi imager 
           run: |
-            sudo chroot /mnt /usr/bin/qemu-arm-static apt install rpi-imager   
+            sudo chroot /mnt apt install rpi-imager   
 
         - name: Configurate image # Настройка образа 
           run: |
-            sudo chroot /mnt /usr/bin/qemu-arm-static raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
-            sudo chroot /mnt /usr/bin/qemu-arm-static raspi-config nonint do_ssh 0
+            sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
+            sudo chroot /mnt raspi-config nonint do_ssh 0
         
 
         - name: Unmount the image partition # Демонтирование раздела образа
