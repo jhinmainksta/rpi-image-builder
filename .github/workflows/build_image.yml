@@ -33,7 +33,7 @@ jobs:
           run: sudo modprobe nbd max_part=8
 
         - name: Connect the image to nbd # Подключение образа к nbd устройству
-          run: sudo qemu-nbd --connect=/dev/nbd0 raspios.img
+          run: sudo qemu-nbd --connect=/dev/nbd0 -drive file=raspios.img,format=raw,if=pflash
 
         - name: Mount the image partition # Монтирование раздела образа
           run: sudo mount /dev/nbd0p2 /mnt
