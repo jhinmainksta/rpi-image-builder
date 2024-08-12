@@ -75,10 +75,19 @@ jobs:
         - name: Disconnect the image from nbd # Отключение образа от nbd устройства
           run: sudo qemu-nbd --disconnect /dev/nbd0
 
+        - name: deploy img
+          uses: softprops/action-gh-release@v1
+          if: ${{ github.event_name == 'release'}}
+          with:
+            files: raspios.img
+            prerelease: true
+          env:
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+            
         - name: Compress image
-          run: xz raspios.img
+          run: xz -k raspios.img
 
-        - name: deploy
+        - name: deploy img.xz
           uses: softprops/action-gh-release@v1
           if: ${{ github.event_name == 'release'}}
           with:
