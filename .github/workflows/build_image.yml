@@ -13,11 +13,16 @@ jobs:
         - name: Checkout repository # Клонирование содержимого репозитория
           uses: actions/checkout@v3 # Использование действия для получения кода из репозитория
 
-        - name: Create copy of base image
+        # - name: Create copy of base image
+        #   run: |
+        #     sudo apt-get install xz-utils
+        #     xz -dk *img.xz
+        #     mv *img raspios.img
+
+        - name: Spawn rpi image
           run: |
-            sudo apt-get install xz-utils
-            xz -dk *img.xz
-            mv *img raspios.img
+            wget https://downloads.raspberrypi.com/raspios_full_armhf/images/raspios_full_armhf-2024-07-04/2024-07-04-raspios-bookworm-armhf-full.img.xz
+            xz -d *img.xz raspios.img
 
         - name: Install required packages # Установка необходимых утилит для работы с образом
           run: sudo apt-get update && sudo apt-get install -y qemu-utils
@@ -43,7 +48,7 @@ jobs:
         - name: Configurate image # Настройка образа 
           run: |
             sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
-
+            sudo chroot /mnt sudo raspi-config nonint do_ssh 0
         
 
         - name: Unmount the image partition # Демонтирование раздела образа
