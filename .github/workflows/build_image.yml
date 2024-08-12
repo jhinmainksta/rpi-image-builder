@@ -1,10 +1,11 @@
 name: Modify Raspberry Pi OS Image
 
 on:
-    push: # Запуск действия при каждом пуше в репозиторий
-        branches:
-        - main
-
+  push: # Запуск действия при каждом пуше в репозиторий
+    branches:
+      - main
+  release:
+    types: [created]
 jobs:
     modify-image:
         runs-on: ubuntu-latest # Использование последней версии Ubuntu для выполнения задач
