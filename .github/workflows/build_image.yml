@@ -65,7 +65,7 @@ jobs:
         #   ошибка:
         #   fatal library error, lookup self
         #   System has not been booted with systemd as init system (PID 1). Can't operate. 
-        - name: Setup ssh 
+        - name: Setup ssh
           run: sudo touch /mnt/boot/ssh
 
         - name: Unmount the image partition # Демонтирование раздела образа
@@ -78,7 +78,7 @@ jobs:
           uses: softprops/action-gh-release@v1
           if: ${{ github.event_name == 'release'}}
           with:
-            files: amogus.txt
+            files: raspios.img
             prerelease: true
           env:
             GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
