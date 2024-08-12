@@ -39,8 +39,8 @@ jobs:
 
         - name: Install file manager in the image # Установка файлового менеджера в образ
           run: |
-            sudo chroot /mnt apt-get update
-            sudo chroot /mnt apt-get install -y mc
+            sudo chroot /mnt sudo apt-get update
+            sudo chroot /mnt sudo apt-get install -y mc
 
         - name: Install rpi-imager # Установка Raspberry Pi imager 
           run: |
