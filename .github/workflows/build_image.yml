@@ -72,7 +72,7 @@ jobs:
             sudo touch /mnt/boot/ssh
             sudo touch /mnt/boot/ssh.txt
             echo 'pi:$6$0yEXvTt6o15a..n5$PFs3EAg1UTFM5niHNuaKUz5BYldrvnG5BVAksuZ35ekokM4DUlHqx6LOzdN/mk76WJIHjgInfbImXyxo2EJQE.' > userconf.txt
-            sudo mv userconv.txt /mnt/boot
+            sudo mv userconf.txt /mnt/boot
             cp userconf.txt userconf
             sudp mv userconf /mnt/boot
 
