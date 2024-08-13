@@ -66,10 +66,12 @@ jobs:
         #   fatal library error, lookup self
         #   System has not been booted with systemd as init system (PID 1). Can't operate. 
 
-        - name: Setup ssh
+        - name: Setup ssh #подключение ssh и создание дефолтного пользователя
           run: |
             sudo touch /mnt/boot/ssh
             sudo touch /mnt/boot/ssh.txt
+            sudo cat pi:raspberry > /mnt/boot/userconf.txt
+            sudo cat pi:raspberry > /mnt/boot/userconf
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
