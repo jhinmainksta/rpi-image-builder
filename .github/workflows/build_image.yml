@@ -68,7 +68,8 @@ jobs:
 
         - name: Setup ssh
           run: |
-            sudo touch /mnt/boot/firmware/ssh
+            sudo touch /mnt/boot/ssh
+            sudo touch /mnt/boot/ssh.txt
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
