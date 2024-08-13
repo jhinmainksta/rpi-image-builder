@@ -69,13 +69,9 @@ jobs:
         - name: Setup ssh # подключение ssh и создание дефолтного пользователя. команда, использованная для шифрования пароля - echo 'raspberry' | openssl passwd -6 -stdin
                           # 'pi:encrypted_password'
           run: |
-            sudo touch /mnt/boot/ssh
             sudo touch /mnt/boot/ssh.txt
-            pwd
             echo 'pi:$6$0yEXvTt6o15a..n5$PFs3EAg1UTFM5niHNuaKUz5BYldrvnG5BVAksuZ35ekokM4DUlHqx6LOzdN/mk76WJIHjgInfbImXyxo2EJQE.' > userconf.txt
-            cp userconf.txt userconf
-            sudo mv userconf.txt /mnt/boot/userconf.txt
-            sudo mv userconf /mnt/boot/userconf
+        #    sudo mv userconf.txt /mnt/boot/userconf.txt
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
