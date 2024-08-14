@@ -70,8 +70,9 @@ jobs:
                           # 'pi:encrypted_password'
           run: |
             sudo touch /mnt/boot/firmware/ssh
-            echo 'pi:$6$odC/ucJlR.TBrybv$6TZoQWwxePD.9Umq0sFEbCB47YBxRYJ9eN6fMb0W2dqibRcYmsLzNIDPGqI8bGNqKTjcWZ54PsxwDiqnfqca3.' > userconf
-            sudo mv userconf /mnt/boot/firmware/userconf
+            echo 'pi:$6$GG52pCCOOuFX76nR$uAF4l3OG7cV9gSNpXkTm15Hz.iqwk9a/02n9MXt3ZJtW6spAAxJ8VTwfZ.rDG6HNUFUNiy5VOeC5Thhvaky6L0' > userconf
+            sudo mv userconf /mnt/boot/firmware/userconf.txt
+            sudo rm /mnt/etc/systemd/system/multi-user.target.wants/userconfig.service
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
