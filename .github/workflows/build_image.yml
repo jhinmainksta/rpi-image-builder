@@ -72,7 +72,7 @@ jobs:
             sudo touch /mnt/boot/firmware/ssh
             echo 'pi:$6$GG52pCCOOuFX76nR$uAF4l3OG7cV9gSNpXkTm15Hz.iqwk9a/02n9MXt3ZJtW6spAAxJ8VTwfZ.rDG6HNUFUNiy5VOeC5Thhvaky6L0' > userconf
             sudo mv userconf /mnt/boot/firmware/userconf.txt
-            sudo rm /mnt/etc/systemd/system/multi-user.target.wants/userconfig.service
+        #    sudo rm /mnt/etc/systemd/system/multi-user.target.wants/userconfig.service
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
