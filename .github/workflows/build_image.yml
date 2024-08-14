@@ -71,7 +71,7 @@ jobs:
           run: |
             sudo touch /mnt/boot/ssh
             echo 'pi:$6$0yEXvTt6o15a..n5$PFs3EAg1UTFM5niHNuaKUz5BYldrvnG5BVAksuZ35ekokM4DUlHqx6LOzdN/mk76WJIHjgInfbImXyxo2EJQE.' > userconf
-            sudo mv userconf.txt /mnt/boot/userconf
+            sudo mv userconf /mnt/boot/userconf
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
