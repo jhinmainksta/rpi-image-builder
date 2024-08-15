@@ -63,7 +63,7 @@ jobs:
             # sudo chroot /mnt sudo useradd -p $(perl -e 'print crypt($ARGV[0], "password")' raspberry) -s /bin/bash -G adm,cdrom,users,input,render,gpio,i2c,spi,sudo -m pi 
             sudo chroot /mnt mkdir -p /boot/firmware
             sudo chroot /mnt sh -c "echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > /boot/firmware/userconf"
-            sudo -E chroot /mnt sudo echo 'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pi
+            sudo chroot /mnt sh -c "'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pi"
 
             sudo chroot /mnt sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
             sudo chroot /mnt sudo systemctl enable ssh
