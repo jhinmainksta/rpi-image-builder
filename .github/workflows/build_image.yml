@@ -72,7 +72,8 @@ jobs:
                           # 'pi:encrypted_password'
           run: |
             sudo chroot /mnt apt-get update && sudo chroot /mnt apt-get install openssh-server sudo -y
-            sudo useradd -rm -d /home/pi -s /bin/bash -g root -G sudo 1001 raspberry
+            sudo useradd pi
+            sudo passwd raspberry
 
             sudo service ssh start
 
