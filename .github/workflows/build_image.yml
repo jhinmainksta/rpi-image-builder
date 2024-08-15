@@ -70,7 +70,7 @@ jobs:
               echo "Файл ssh найден."
             else
               echo "Файл ssh не найден" >&2
-            exit 1
+              exit 1
             fi
 
         - name: Start and check sh service 
