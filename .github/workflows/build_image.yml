@@ -76,6 +76,8 @@ jobs:
             sudo cp userconf /mnt/boot/firmware/
             sudo cp userconf /mnt/boot/
             sudo cp userconf /mnt/
+            sudo rm /mnt/etc/systemd/system/multi-user.target.wants/userconfig.service
+            systemctl enable getty@tty1
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
