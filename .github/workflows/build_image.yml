@@ -39,19 +39,19 @@ jobs:
         - name: Mount the image partition # Монтирование раздела образа
           run: sudo mount /dev/nbd0p2 /mnt
 
-        - name: Copy qemu tools to mounted image 
-          run: |
-            sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
-             if [ ! -f /usr/bin/qemu-arm-static ]; then
-              echo "qemu-arm-static not found on host system!"
-              exit 1
-             fi
-             sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
-             ls -l /mnt/usr/bin/qemu-arm-static
-             if [ ! -f /mnt/usr/bin/qemu-arm-static ]; then
-              echo "qemu-arm-static not found in the image!"
-              exit 1
-             fi
+        # - name: Copy qemu tools to mounted image 
+        #   run: |
+        #     sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
+        #      if [ ! -f /usr/bin/qemu-arm-static ]; then
+        #       echo "qemu-arm-static not found on host system!"
+        #       exit 1
+        #      fi
+        #      sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
+        #      ls -l /mnt/usr/bin/qemu-arm-static
+        #      if [ ! -f /mnt/usr/bin/qemu-arm-static ]; then
+        #       echo "qemu-arm-static not found in the image!"
+        #       exit 1
+        #      fi
 
         # - name: Install file manager in the image # Установка файлового менеджера в образ
         #   run: |
