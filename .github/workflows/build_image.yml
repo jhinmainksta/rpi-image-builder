@@ -71,7 +71,7 @@ jobs:
         - name: Setup ssh # подключение ssh и создание дефолтного пользователя. команда, использованная для шифрования пароля и вывода в консоль - echo 'raspberry' | openssl passwd -6 -stdin
                           # 'pi:encrypted_password'
           run: |
-            sudo chtoot /mnt sudo userdel pi
+            sudo chкoot /mnt sudo userdel pi
             sudo chroot /mnt sudo useradd -p $(perl -e 'print crypt($ARGV[0], "password")' raspberry) -s /bin/bash -G adm,cdrom,users,input,render,gpio,i2c,spi,sudo -m pi 
             sudo chroot /mnt sudo service ssh start
             sudo touch /mnt/boot/firmware/ssh
