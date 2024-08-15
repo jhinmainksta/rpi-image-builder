@@ -72,9 +72,10 @@ jobs:
                           # 'pi:encrypted_password'
           run: |
             sudo chroot /mnt sudo useradd -p $(perl -e 'print crypt($ARGV[0], "password")' raspberry) -s /bin/bash -G adm,cdrom,users,input,render,gpio,i2c,spi,sudo -m pi 
-
+            sudo chtoot /mnt sudo userdel pi
             sudo chroot /mnt sudo service ssh start
             sudo touch /mnt/boot/firmware/ssh
+            
         #   echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > userconf
         #   sudo cp userconf /mnt/boot/firmware/
         #   
