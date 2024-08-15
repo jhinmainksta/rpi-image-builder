@@ -69,18 +69,20 @@ jobs:
             if [ -f /mnt/boot/firmware/ssh ]; then
               echo "Файл ssh найден."
             else
-              echo "Файл ssh не найден" >&2
+              echo "Файл ssh не найден" > &2
               exit 1
             fi
+          shell: bash
 
         - name: Start and check sh service 
           run:  |
             sudo chroot /mnt service ssh start
 
             sudo chroot /mnt service ssh status || {
-              echo "Не удалось запустить SSH" >&2
+              echo "Не удалось запустить SSH" > &2
               exit 1
             }
+          shell: bash
 
         - name: Check for ip
           run: |
@@ -88,9 +90,10 @@ jobs:
             if [ -n "$IP_ADDRESS" ]; then
               echo "Адрес: pi@$IP_ADDRESS"
             else
-              echo "Не удалось получить IP-адрес" >&2
+              echo "Не удалось получить IP-адрес" > &2
               exit 1
             fi
+          shell: bash
 
         #   echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > userconf
         #   sudo cp userconf /mnt/boot/firmware/
