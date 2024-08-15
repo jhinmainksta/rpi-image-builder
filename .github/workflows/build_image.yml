@@ -59,18 +59,18 @@ jobs:
 
         - name: Setup ssh # подключение ssh и создание дефолтного пользователя. команда, использованная для шифрования пароля и вывода в консоль - echo 'raspberry' | openssl passwd -6 -stdin
           run: |
-            # sudo chroot /mnt sudo userdel -r pi
-            # sudo chroot /mnt sudo useradd -p $(perl -e 'print crypt($ARGV[0], "password")' raspberry) -s /bin/bash -G adm,cdrom,users,input,render,gpio,i2c,spi,sudo -m pi 
-            sudo chroot /mnt echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > boot/firmware/userconf
-            sudo chroot /mnt echo 'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pi
+            # sudo chroot -r /mnt sudo userdel -r pi
+            # sudo chroot -r /mnt sudo useradd -p $(perl -e 'print crypt($ARGV[0], "password")' raspberry) -s /bin/bash -G adm,cdrom,users,input,render,gpio,i2c,spi,sudo -m pi 
+            sudo chroot -r /mnt echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > boot/firmware/userconf
+            sudo chroot -r /mnt echo 'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pi
 
-            sudo chroot /mnt sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
-            sudo chroot /mnt sudo systemctl enable ssh
-            sudo chroot /mnt sudo systemctl start ssh
+            sudo chroot -r /mnt sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+            sudo chroot -r /mnt sudo systemctl enable ssh
+            sudo chroot -r /mnt sudo systemctl start ssh
             
-            sudo chroot /mnt sudo service ssh start
+            sudo chroot -r /mnt sudo service ssh start
 
-            sudo touch /mnt/boot/firmware/ssh
+            sudo chroot -r /mnt touch boot/firmware/ssh
         
         - name: Check ssh file in /boot/firmware # проверка наличия файла 
           run: |
@@ -83,9 +83,9 @@ jobs:
 
         - name: Start and check sh service 
           run:  |
-            sudo chroot /mnt service ssh start
+            sudo chroot -r /mnt service ssh start
 
-            sudo chroot /mnt service ssh status || {
+            sudo chroot -r /mnt service ssh status || {
               echo "Не удалось запустить SSH" >&2
               exit 1
             }
