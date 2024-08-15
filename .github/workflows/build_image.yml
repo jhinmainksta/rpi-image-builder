@@ -61,18 +61,19 @@ jobs:
           run: |
             sudo chroot /mnt sudo userdel -r pi
             sudo chroot /mnt sudo useradd -p $(perl -e 'print crypt($ARGV[0], "password")' raspberry) -s /bin/bash -G adm,cdrom,users,input,render,gpio,i2c,spi,sudo -m pi 
+
             sudo chroot /mnt sudo service ssh start
+
             sudo touch /mnt/boot/firmware/ssh
         
         - name: Check ssh file in /boot/firmware # проверка наличия файла 
-          run: 
+          run: |
             if [ -f /mnt/boot/firmware/ssh ]; then
-              echo "Файл ssh найден."
+              echo "Файл ssh найден"
             else
               echo "Файл ssh не найден" >&2
               exit 1
             fi
-          shell: bash
 
         - name: Start and check sh service 
           run:  |
@@ -82,7 +83,6 @@ jobs:
               echo "Не удалось запустить SSH" >&2
               exit 1
             }
-          shell: bash
 
         - name: Check for ip
           run: |
@@ -93,7 +93,6 @@ jobs:
               echo "Не удалось получить IP-адрес" >&2
               exit 1
             fi
-          shell: bash
 
         #   echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > userconf
         #   sudo cp userconf /mnt/boot/firmware/
