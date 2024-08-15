@@ -28,7 +28,7 @@ jobs:
             mv *img raspios.img
 
         - name: Install required packages # Установка необходимых утилит для работы с образом
-          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static
+          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static 
 
         - name: Load nbd kernel module # Загрузка модуля ядра nbd
           run: sudo modprobe nbd max_part=8
@@ -52,6 +52,7 @@ jobs:
         #       echo "qemu-arm-static not found in the image!"
         #       exit 1
         #      fi
+        #
         #  багает, иногда не может выполнить ls -l /mnt/usr/bin/qemu-arm-static: нет директории
 
         # - name: Install file manager in the image # Установка файлового менеджера в образ
@@ -63,21 +64,28 @@ jobs:
         #   run: |
         #     sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
         #     sudo chroot /mnt raspi-config nonint do_ssh 0
-        #   ошибка:
-        #   fatal library error, lookup self
+        #
+        #   ошибка: fatal library error, lookup self
         #   System has not been booted with systemd as init system (PID 1). Can't operate. 
 
         - name: Setup ssh # подключение ssh и создание дефолтного пользователя. команда, использованная для шифрования пароля - echo 'raspberry' | openssl passwd -6 -stdin
                           # 'pi:encrypted_password'
           run: |
-            sudo touch /mnt/boot/firmware/ssh
-            echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > userconf
-            sudo cp userconf /mnt/boot/firmware/
-            sudo systemctl enable ssh
+            sudo chroot /mnt apt-get update && apt-get install openssh-server sudo -y
+            useradd -rm -d /home/pi -s /bin/bash -g root -G sudo 1001 raspberry
+
+            sudo service ssh start
+
+        #   sudo touch /mnt/boot/firmware/ssh
+        #   echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > userconf
+        #   sudo cp userconf /mnt/boot/firmware/
+        #   
+        #   sudo systemctl enable ssh
             
-        #    sudo rm /mnt/etc/systemd/system/multi-user.target.wants/userconfig.service
-        #    sudo systemctl enable getty@tty1
-        #  не завершается запуск, встает на Finished systemd-update-utmp-runlevel.service - Record Runlevel Change in UTMP
+        #   sudo rm /mnt/etc/systemd/system/multi-user.target.wants/userconfig.service
+        #   sudo systemctl enable getty@tty1
+        #
+        #   не завершается запуск, встает на Finished systemd-update-utmp-runlevel.service - Record Runlevel Change in UTMP
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
