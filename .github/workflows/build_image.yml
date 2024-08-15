@@ -70,14 +70,11 @@ jobs:
                           # 'pi:encrypted_password'
           run: |
             sudo touch /mnt/boot/firmware/ssh
-            sudo touch /mnt/boot/ssh
-            sudo touch /mnt/ssh
             echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > userconf
             sudo cp userconf /mnt/boot/firmware/
-            sudo cp userconf /mnt/boot/
-            sudo cp userconf /mnt/
             sudo rm /mnt/etc/systemd/system/multi-user.target.wants/userconfig.service
-            systemctl enable getty@tty1
+            sudo systemctl enable getty@tty1
+            sudo systemctl enable ssh
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
