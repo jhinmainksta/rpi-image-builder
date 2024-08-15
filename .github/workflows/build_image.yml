@@ -69,7 +69,7 @@ jobs:
             if [ -f /mnt/boot/firmware/ssh ]; then
               echo "Файл ssh найден."
             else
-              echo "Файл ssh не найден" > &2
+              echo "Файл ssh не найден" >&2
               exit 1
             fi
           shell: bash
@@ -79,7 +79,7 @@ jobs:
             sudo chroot /mnt service ssh start
 
             sudo chroot /mnt service ssh status || {
-              echo "Не удалось запустить SSH" > &2
+              echo "Не удалось запустить SSH" >&2
               exit 1
             }
           shell: bash
@@ -90,7 +90,7 @@ jobs:
             if [ -n "$IP_ADDRESS" ]; then
               echo "Адрес: pi@$IP_ADDRESS"
             else
-              echo "Не удалось получить IP-адрес" > &2
+              echo "Не удалось получить IP-адрес" >&2
               exit 1
             fi
           shell: bash
