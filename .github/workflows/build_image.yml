@@ -22,7 +22,7 @@ jobs:
             mv *img raspios.img
 
         - name: Install required packages # Установка необходимых утилит для работы с образом
-          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static systemd-container
+          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static systemd-container openssh-server
 
         - name: Load nbd kernel module # Загрузка модуля ядра nbd
           run: sudo modprobe nbd max_part=8
@@ -72,7 +72,7 @@ jobs:
             sudo chroot /mnt chmod 0755 /run/sshd
 
             sudo chroot /mnt SSH_HOST_KEY_ALG=rsa ssh-keygen -A
-            
+
             sudo chroot /mnt touch /boot/firmware/ssh
             sudo chroot /mnt /usr/sbin/sshd
         
