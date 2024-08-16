@@ -22,7 +22,7 @@ jobs:
             mv *img raspios.img
 
         - name: Install required packages # Установка необходимых утилит для работы с образом
-          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static systemd-container
+          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static
 
         - name: Load nbd kernel module # Загрузка модуля ядра nbd
           run: sudo modprobe nbd max_part=8
@@ -33,39 +33,61 @@ jobs:
         - name: Mount the image partition # Монтирование раздела образа
           run: sudo mount /dev/nbd0p2 /mnt
 
-        - name: Install openssh-server on image
+        - name: Install openssh-server on image # Установка демона 
           run:
-            sudo chroot /mnt sudo apt-get update && sudo apt-get install -y openssh-server
+            sudo chroot /mnt apt-get update && sudo apt-get install -y openssh-server
+            #dont need sudo?
 
-        - name: Setup ssh # подключение ssh и создание дефолтного пользователя. команда, использованная для шифрования пароля и вывода в консоль - echo 'raspberry' | openssl passwd -6 -stdin
+        - name: Setup ssh and create default user # подключение ssh и создание дефолтного пользователя. команда, использованная для шифрования пароля и вывода в консоль - echo 'raspberry' | openssl passwd -6 -stdin
           run: |
-            sudo chroot /mnt sudo userdel -r pi
-            sudo chroot /mnt sudo useradd -p $(echo 'raspberry' | openssl passwd -6 -stdin) -s /bin/bash -G adm,cdrom,users,input,render,gpio,i2c,spi,sudo -m pi 
-            # sudo chroot /mnt mkdir -p /boot/firmware
-            # sudo chroot /mnt sh -c "echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > /boot/firmware/userconf"
-            # sudo chroot /mnt sh -c "echo 'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pi"
+            ## Initialize username and password variables ##
+            USERNAME="pi"
+            PASSWORD="raspberry"
 
-            sudo chroot /mnt sh -c "sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config"
-            sudo chroot /mnt sh -c "systemctl enable ssh"
+            ## Delete $USERNAME with his directory /home/$USERNAME if exist ##
+            sudo chroot /mnt sudo userdel -r $USERNAME || echo "user $USERNAME doesn't exist"
 
+            ## Create $USERNAME with $PASSWORD password ##
+            sudo chroot /mnt bash -c "echo '$USERNAME:$PASSWORD' | chpassword" || {echo "an error occured while creating $USERNAME";exit 1;}
+            
+            ## Add $USERNAME to groups ##
+            sudo chroot /mnt sudo usermod -aG sudo,adm,cdrom,users,input,render,gpio,i2c,spi $USERNAME 
+              || {echo "an error occured while adding user to groups"; exit 1;}
+
+            ## Enable ssh and login by password ##
+            sudo chroot /mnt sh -c "sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config" 
+              || {echo "an error occured while setup ssh"}
+            sudo chroot /mnt sh -c "systemctl enable ssh" || {echo "an error occured while starting ssh"}
+
+            ## Create required dirs and gen ssh-key ##
             sudo chroot /mnt mkdir -p /run/sshd
             sudo chroot /mnt chmod 0755 /run/sshd
-            sudo chroot /mnt cat /etc/ssh/ssh_config
             sudo chroot /mnt ssh-keygen -A
-            echo "SSH keygen output:"
-            sudo chroot /mnt ls -l /etc/ssh
 
-            # sudo chroot /mnt touch /boot/firmware/ssh
-            sudo chroot /mnt /usr/sbin/sshd
+            ## Run ssh ##
+            sudo chroot /mnt /usr/sbin/sshd || {echo "an error occured while running ssh"}
+
+            ## Check list of users ##
+            sudo chroot /mnt cat /etc/passwd
+
+            ##  ##
         
-        # - name: Check ssh file in /boot/firmware # проверка наличия файла 
-        #   run: |
-        #     if [ -f /mnt/boot/firmware/ssh ]; then
-        #       echo "Файл ssh найден"
-        #     else
-        #       echo "Файл ssh не найден" >&2
-        #       exit 1
-        #     fi
+          # sudo chroot /mnt mkdir -p /boot/firmware
+          # sudo chroot /mnt sh -c "echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > /boot/firmware/userconf"
+          # sudo chroot /mnt sh -c "echo 'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pi"
+          # sudo chroot /mnt touch /boot/firmware/ssh
+          # 
+          # способ создания дефолт юзера путем добавления userconf файла в /boot/firmware с текстом 'user:encrypt_password',
+          # не работает. насчет ssh непонятно. 
+
+        - name: Check ssh file in /boot/firmware # проверка наличия файла 
+          run: |
+            if [ -f /mnt/boot/firmware/ssh ]; then
+              echo "Файл ssh найден"
+            else
+              echo "Файл ssh не найден" >&2
+              exit 1
+            fi
 
         - name: Start and check sh service 
           run:  |
