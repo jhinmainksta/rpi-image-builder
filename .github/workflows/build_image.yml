@@ -51,12 +51,12 @@ jobs:
             sudo chroot /mnt mkdir -p /run/sshd
             sudo chroot /mnt chmod 0755 /run/sshd
             sudo chroot /mnt cat /etc/ssh/ssh_config
-            sudo chroot /mnt /usr/sbin/ssh-keygen -A
+            sudo chroot /mnt ssh-keygen -A
             echo "SSH keygen output:"
             sudo chroot /mnt ls -l /etc/ssh
 
             sudo chroot /mnt touch /boot/firmware/ssh
-            sudo chroot /mnt /usr/sbin/sshd
+            sudo chroot /mnt usr/sbin/sshd
         
         - name: Check ssh file in /boot/firmware # проверка наличия файла 
           run: |
