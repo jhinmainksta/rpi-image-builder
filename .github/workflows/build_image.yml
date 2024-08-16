@@ -22,7 +22,7 @@ jobs:
             mv *img raspios.img
 
         - name: Install required packages # Установка необходимых утилит для работы с образом
-          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static 
+          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static systemd-container
 
         - name: Load nbd kernel module # Загрузка модуля ядра nbd
           run: sudo modprobe nbd max_part=8
@@ -66,9 +66,9 @@ jobs:
             sudo chroot /mnt sh -c "echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > /boot/firmware/userconf"
             sudo chroot /mnt sh -c "echo 'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pi"
 
-            sudo -E chroot --userspec=0:0 /mnt sh -c "sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config"
-            sudo -E chroot --userspec=0:0 /mnt sh -c "systemctl enable ssh"
-            sudo -E chroot --userspec=0:0 /mnt sh -c "systemctl start ssh"
+            sudo chroot /mnt sh -c "sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config"
+            sudo chroot /mnt sh -c "systemctl enable ssh"
+            sudo chroot /mnt sh -c "systemctl start ssh"
 
             sudo chroot /mnt touch /boot/firmware/ssh
         
