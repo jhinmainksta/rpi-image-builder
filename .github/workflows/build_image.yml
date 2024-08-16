@@ -22,7 +22,7 @@ jobs:
             mv *img raspios.img
 
         - name: Install required packages # Установка необходимых утилит для работы с образом
-          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static systemd-container openssh-server
+          run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static systemd-container
 
         - name: Load nbd kernel module # Загрузка модуля ядра nbd
           run: sudo modprobe nbd max_part=8
@@ -33,30 +33,9 @@ jobs:
         - name: Mount the image partition # Монтирование раздела образа
           run: sudo mount /dev/nbd0p2 /mnt
 
-        # - name: Copy qemu tools to mounted image 
-        #   run: |
-        #     sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
-        #      if [ ! -f /usr/bin/qemu-arm-static ]; then
-        #       echo "qemu-arm-static not found on host system!"
-        #       exit 1
-        #      fi
-        #      sudo cp /usr/bin/qemu-arm-static /mnt/usr/bin/
-        #      ls -l /mnt/usr/bin/qemu-arm-static
-        #      if [ ! -f /mnt/usr/bin/qemu-arm-static ]; then
-        #       echo "qemu-arm-static not found in the image!"
-        #       exit 1
-        #      fi
-        #
-        #  иногда не может выполнить ls -l /mnt/usr/bin/qemu-arm-static: нет директории
-
-        # - name: Configurate image # Настройка образа 
-        #   run: |
-        #     sudo chroot /mnt raspi-config nonint do_wifi_ssid_passphrase myssid mypassphrase
-        #     sudo chroot /mnt raspi-config nonint do_ssh 0
-        #
-        #   ошибка: fatal library error, lookup self
-        #   System has not been booted with systemd as init system (PID 1). Can't operate. 
-
+        - name: Install openssh-server on image
+          run:
+            sudo chroot /mnt apt-get update && apt-get install -y openssh-server
         - name: Setup ssh # подключение ssh и создание дефолтного пользователя. команда, использованная для шифрования пароля и вывода в консоль - echo 'raspberry' | openssl passwd -6 -stdin
           run: |
             # sudo chroot /mnt sudo userdel -r pi
@@ -103,16 +82,6 @@ jobs:
               echo "Не удалось получить IP-адрес" >&2
               exit 1
             fi
-
-        #   echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > userconf
-        #   sudo cp userconf /mnt/boot/firmware/userconf
-        #   
-        #   не работает
-            
-        #   sudo rm /mnt/etc/systemd/system/multi-user.target.wants/userconfig.service
-        #   sudo systemctl enable getty@tty1
-        #
-        #   не завершается запуск, встает на Finished systemd-update-utmp-runlevel.service - Record Runlevel Change in UTMP
 
         - name: Unmount the image partition # Демонтирование раздела образа
           run: sudo umount /mnt
