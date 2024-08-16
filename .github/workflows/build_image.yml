@@ -69,6 +69,8 @@ jobs:
             sudo chroot /mnt sh -c "systemctl enable ssh"
 
             sudo chroot /mnt touch /boot/firmware/ssh
+            sudo chroot /mnt /usr/sbin/sshd -t
+            sudo chroot /mnt /usr/sbin/sshd
             sudo chroot /mnt ssh-keygen -A
         
         - name: Check ssh file in /boot/firmware # проверка наличия файла 
