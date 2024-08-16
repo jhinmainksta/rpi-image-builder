@@ -68,6 +68,8 @@ jobs:
             sudo chroot /mnt sh -c "sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config"
             sudo chroot /mnt sh -c "systemctl enable ssh"
 
+            sudo chroot /mnt mkdir -p /run/sshd
+            sudo chroot /mnt chmod 0755 /run/sshd
             sudo chroot /mnt ssh-keygen -A
             sudo chroot /mnt touch /boot/firmware/ssh
             sudo chroot /mnt /usr/sbin/sshd -t
