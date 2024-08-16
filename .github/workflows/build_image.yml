@@ -81,9 +81,9 @@ jobs:
 
         - name: Start and check sh service 
           run:  |
-            sudo chroot -r /mnt service ssh start
+            sudo chroot /mnt service ssh start
 
-            sudo chroot -r /mnt service ssh status || {
+            sudo chroot /mnt service ssh status || {
               echo "Не удалось запустить SSH" >&2
               exit 1
             }
