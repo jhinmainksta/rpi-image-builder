@@ -65,11 +65,11 @@ jobs:
             sudo chroot /mnt sh -c "echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > /boot/firmware/userconf"
             sudo chroot /mnt sh -c "echo 'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pi"
 
-            sudo -E chroot --userspec=0:0 /mnt sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
-            sudo -E chroot --userspec=0:0 /mnt sudo systemctl enable ssh
-            sudo -E chroot --userspec=0:0 /mnt sudo systemctl start ssh
+            sudo -E chroot --userspec=0:0 /mnt sh -c "sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config"
+            sudo -E chroot --userspec=0:0 /mnt sh -c "systemctl enable ssh"
+            sudo -E chroot --userspec=0:0 /mnt sh -c "systemctl start ssh"
             
-            sudo -E chroot /mnt sudo service ssh start
+            sudo -E chroot --userspec=0:0 /mnt sh -c "sudo service ssh start"
 
             sudo chroot /mnt touch /boot/firmware/ssh
         
