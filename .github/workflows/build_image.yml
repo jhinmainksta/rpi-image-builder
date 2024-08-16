@@ -35,7 +35,8 @@ jobs:
 
         - name: Install openssh-server on image
           run:
-            sudo chroot /mnt apt-get update && apt-get install -y openssh-server
+            sudo chroot /mnt sudo apt-get update && sudo apt-get install -y openssh-server
+
         - name: Setup ssh # подключение ssh и создание дефолтного пользователя. команда, использованная для шифрования пароля и вывода в консоль - echo 'raspberry' | openssl passwd -6 -stdin
           run: |
             # sudo chroot /mnt sudo userdel -r pi
