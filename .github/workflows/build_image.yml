@@ -64,14 +64,15 @@ jobs:
 
             ## Run ssh ##
             sudo chroot /mnt /usr/sbin/sshd || { echo "an error occured while running ssh";exit 1; }
+            sudo chroot /mnt touch /boot/firmware/ssh
 
             ## Check list of users ##
             sudo chroot /mnt cat /etc/passwd
+            sudo chroot /mnt cat /etc/hosts
         
           # sudo chroot /mnt mkdir -p /boot/firmware
           # sudo chroot /mnt sh -c "echo 'pi:$6$4wZeqrrVWO9IPXdn$UjdB3q36d7AtE9AlW9xDarC05c6sXq1Vep470/Q6AOpATbhzsXqEDwo8tDNLORJNmXu5kmJb.wTalGBoEnpbU0' > /boot/firmware/userconf"
           # sudo chroot /mnt sh -c "echo 'pi ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/pi"
-          # sudo chroot /mnt touch /boot/firmware/ssh
           # 
           # способ создания дефолт юзера путем добавления userconf файла в /boot/firmware с текстом 'user:encrypt_password',
           # не работает. насчет ssh непонятно. 
