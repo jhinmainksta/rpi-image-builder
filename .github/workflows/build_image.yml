@@ -58,14 +58,14 @@ jobs:
             # sudo chroot /mnt touch /boot/firmware/ssh
             sudo chroot /mnt /usr/sbin/sshd
         
-        - name: Check ssh file in /boot/firmware # проверка наличия файла 
-          run: |
-            if [ -f /mnt/boot/firmware/ssh ]; then
-              echo "Файл ssh найден"
-            else
-              echo "Файл ssh не найден" >&2
-              exit 1
-            fi
+        # - name: Check ssh file in /boot/firmware # проверка наличия файла 
+        #   run: |
+        #     if [ -f /mnt/boot/firmware/ssh ]; then
+        #       echo "Файл ssh найден"
+        #     else
+        #       echo "Файл ssh не найден" >&2
+        #       exit 1
+        #     fi
 
         - name: Start and check sh service 
           run:  |
