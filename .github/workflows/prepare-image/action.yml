@@ -7,7 +7,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Prepare image
+    - name: prepare image
       shell: bash
       run: |
 

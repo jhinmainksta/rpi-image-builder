@@ -4,18 +4,18 @@ inputs:
   zip-image-path:
     type: string
 
-default:
-  run:
-    shell: bash
-
 runs:
   using: composite
   steps:
-    - name: Unmount the image partition
-      run: sudo umount /mnt
+    - name: zip-image
+      shell: bash
+      run: |
 
-    - name: Disconnect the image from nbd
-      run: sudo qemu-nbd --disconnect /dev/nbd0
+        ## Unmount the image partition ##
+        sudo umount /mnt
 
-    - name: Compress image
-      run: xz raspios.img
+        ## Disconnect the image from nbd ##
+        sudo qemu-nbd --disconnect /dev/nbd0
+
+        ## Compress image ##
+        xz raspios.img
