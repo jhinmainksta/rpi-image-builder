@@ -22,10 +22,8 @@ runs:
 
         ## check sh service ##
         sudo chroot /mnt /usr/sbin/sshd -t || sudo chroot /mnt service ssh start
-        sudo chroot /mnt /usr/sbin/sshd -t || {
-          echo "Не удалось запустить SSH" >&2
-          exit 1 }
-          
+        sudo chroot /mnt /usr/sbin/sshd -t || {  echo "ssh service is not running"; exit 1; }
+
         ## Check for ip ##
         IP_ADDRESS=$(sudo chroot /mnt hostname -I | awk '{print $1}')
         if [ -n "$IP_ADDRESS" ]; then
