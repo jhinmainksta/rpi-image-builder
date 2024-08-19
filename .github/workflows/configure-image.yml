@@ -1,0 +1,43 @@
+on:
+  workflow_call:
+    inputs:
+      username:
+        required: true
+        type: string
+      password:
+        required: true
+        type: string
+
+jobs:
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create/change default user
+        run: |
+          ## Initialize username and password variables ##
+          USERNAME=${{ inputs.username }}
+          PASSWORD=${{ inputs.password }}
+
+          ## Delete $USERNAME with his directory /home/$USERNAME if exist ##
+          sudo chroot /mnt sudo userdel -r $USERNAME || echo "user $USERNAME doesn't exist"
+
+          ## Create $USERNAME with $PASSWORD password ##
+          sudo chroot /mnt sudo useradd -p $(echo $PASSWORD | openssl passwd -6 -stdin) -s /bin/bash -m $USERNAME || { echo "an error occured while creating $USERNAME"; exit 1; }
+            
+          ## Add $USERNAME to groups ##
+          sudo chroot /mnt sudo usermod -aG sudo,adm,cdrom,users,input,render,gpio,i2c,spi $USERNAME || { echo "an error occured while adding user to groups"; exit 1; }
+
+      - name: Setup ssh
+        run: |
+          ## Enable ssh and login by password ##
+          sudo chroot /mnt sh -c "sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config" || { echo "an error occured while setup ssh"; exit 1; }
+          sudo chroot /mnt sh -c "systemctl enable ssh" || { echo "an error occured while starting ssh";exit 1; }
+
+          ## Create required dirs and gen ssh-key ##
+          sudo chroot /mnt mkdir -p /run/sshd
+          sudo chroot /mnt chmod 0755 /run/sshd
+          sudo chroot /mnt ssh-keygen -A
+
+          ## Run ssh ##
+          sudo chroot /mnt /usr/sbin/sshd -t || { echo "an error occured while running ssh";exit 1; }
+          sudo chroot /mnt touch /boot/firmware/ssh

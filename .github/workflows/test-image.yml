@@ -1,0 +1,39 @@
+on:
+  workflow_call:
+
+jobs:
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check ssh file in /boot/firmware # проверка наличия файла
+        run: |
+          if [ -f /mnt/boot/firmware/ssh ]; then
+            echo "Файл ssh найден"
+          else
+            echo "Файл ssh не найден" >&2
+            exit 1
+          fi
+
+      - name: Check user list
+        run: |
+          sudo chroot /mnt cat /etc/passwd
+          sudo chroot /mnt cat /etc/hosts
+
+      - name: Start and check sh service
+        run: |
+          sudo chroot /mnt /usr/sbin/sshd -t || sudo chroot /mnt service ssh start
+
+          sudo chroot /mnt /usr/sbin/sshd -t || {
+            echo "Не удалось запустить SSH" >&2
+            exit 1
+          }
+
+      - name: Check for ip
+        run: |
+          IP_ADDRESS=$(sudo chroot /mnt hostname -I | awk '{print $1}')
+          if [ -n "$IP_ADDRESS" ]; then
+            echo "Адрес: pi@$IP_ADDRESS"
+          else
+            echo "Не удалось получить IP-адрес" >&2
+            exit 1
+          fi
