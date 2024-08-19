@@ -10,6 +10,9 @@ jobs:
   reusable_workflow_job:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Get an image
         run: |
           wget ${{ inputs.zip-image-path }}
