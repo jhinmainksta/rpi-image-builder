@@ -1,5 +1,5 @@
-name: zip-image
-description: zip-image
+name: "zip-image"
+description: "zip-image"
 inputs:
   zip-image-path:
     type: string

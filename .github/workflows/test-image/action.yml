@@ -1,5 +1,5 @@
-name: test-image
-description: test-image
+name: "test-image"
+description: "test-image"
 
 runs:
   using: composite

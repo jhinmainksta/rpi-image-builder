@@ -1,5 +1,5 @@
-name: prepare-image
-description: prepare-image
+name: "prepare-image"
+description: "prepare-image"
 inputs:
   zip-image-path:
     type: string

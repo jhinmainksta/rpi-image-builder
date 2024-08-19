@@ -1,5 +1,5 @@
-name: configure-image
-description: configure-image
+name: "configure-image"
+description: "configure-image"
 inputs:
   username:
     required: true
