@@ -5,7 +5,7 @@ inputs:
     type: string
 
 runs:
-  using: shell
+  shell: bash
   steps:
     - name: Get an image
       run: |
