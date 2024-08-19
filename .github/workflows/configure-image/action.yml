@@ -11,7 +11,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Create/change default user
+  - name: Create/change default user
       shell: bash
       run: |
         ## Initialize username and password variables ##
@@ -27,7 +27,7 @@ runs:
         ## Add $USERNAME to groups ##
         sudo chroot /mnt sudo usermod -aG sudo,adm,cdrom,users,input,render,gpio,i2c,spi $USERNAME || { echo "an error occured while adding user to groups"; exit 1; }
 
-    - name: Setup ssh
+  - name: Setup ssh
       shell: bash
       run: |
         ## Enable ssh and login by password ##

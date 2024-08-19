@@ -4,7 +4,7 @@ description: "test-image"
 runs:
   using: composite
   steps:
-    - name: Check ssh file in /boot/firmware
+  - name: Check ssh file in /boot/firmware
       shell: bash
       run: |
         if [ -f /mnt/boot/firmware/ssh ]; then
