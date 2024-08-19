@@ -9,6 +9,7 @@ default:
     shell: bash
 
 runs:
+  using: composite
   steps:
     - name: Unmount the image partition
       run: sudo umount /mnt

@@ -5,6 +5,7 @@ inputs:
     type: string
 
 runs:
+  using: composite
   steps:
     - name: Prepare image
       shell: bash
