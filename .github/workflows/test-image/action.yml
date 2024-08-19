@@ -2,6 +2,7 @@ name: test-image
 description: test-image
 
 runs:
+  using: shell
   steps:
     - name: Check ssh file in /boot/firmware
       run: |

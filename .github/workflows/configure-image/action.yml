@@ -1,5 +1,5 @@
-name: prepare-image
-description: prepare-image
+name: configure-image
+description: configure-image
 inputs:
   username:
     required: true
@@ -9,6 +9,7 @@ inputs:
     type: string
 
 runs:
+  using: shell
   steps:
     - name: Create/change default user
       run: |

@@ -5,6 +5,7 @@ inputs:
     type: string
 
 runs:
+  using: shell
   steps:
     - name: Unmount the image partition
       run: sudo umount /mnt
