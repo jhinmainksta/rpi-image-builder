@@ -1,0 +1,28 @@
+name: prepare-image
+description: prepare-image
+inputs:
+  zip-image-path:
+    type: string
+
+runs:
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Get an image
+      run: |
+        wget ${{ inputs.zip-image-path }}
+        xz -d *img.xz
+        mv *img raspios.img
+
+    - name: Install required packages
+      run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static
+
+    - name: Load nbd kernel module
+      run: sudo modprobe nbd max_part=8
+
+    - name: Connect the image to nbd
+      run: sudo qemu-nbd --connect=/dev/nbd0 --format=raw raspios.img
+
+    - name: Install openssh-server on image
+      run: sudo chroot /mnt sudo apt-get update && sudo apt-get install -y openssh-server
