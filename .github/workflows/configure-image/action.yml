@@ -14,6 +14,7 @@ runs:
     - name: Create/change default user
       shell: bash
       run: |
+
         ## Initialize username and password variables ##
         USERNAME=${{ inputs.username }}
         PASSWORD=${{ inputs.password }}
@@ -30,6 +31,7 @@ runs:
     - name: Setup ssh
       shell: bash
       run: |
+
         ## Enable ssh and login by password ##
         sudo chroot /mnt sh -c "sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config" || { echo "an error occured while setup ssh"; exit 1; }
         sudo chroot /mnt sh -c "systemctl enable ssh" || { echo "an error occured while starting ssh";exit 1; }
