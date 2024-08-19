@@ -25,6 +25,6 @@ jobs:
       - name: Connect the image to nbd
         run: sudo qemu-nbd --connect=/dev/nbd0 --format=raw raspios.img
 
-      - name: Install openssh-server on image # Установка демона
-        run: sudo chroot /mnt sudo apt-get update && sudo apt-get install -y openssh-server
-        #dont need sudo?
+      - name: Install openssh-server on image
+        run: sudo chroot /mnt apt-get update && apt-get install -y openssh-server
+        #doesn't need sudo?
