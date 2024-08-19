@@ -6,9 +6,6 @@ inputs:
 
 runs:
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
     - name: Get an image
       run: |
         wget ${{ inputs.zip-image-path }}
