@@ -5,6 +5,7 @@ runs:
   shell: bash
   steps:
     - name: Check ssh file in /boot/firmware
+      shell: bash
       run: |
         if [ -f /mnt/boot/firmware/ssh ]; then
           echo "Файл ssh найден"
@@ -13,13 +14,13 @@ runs:
           exit 1
         fi
 
-    - name: Check user list
-      run: |
+        Check user list
+
         sudo chroot /mnt cat /etc/passwd
         sudo chroot /mnt cat /etc/hosts
 
-    - name: Start and check sh service
-      run: |
+        Start and check sh service
+
         sudo chroot /mnt /usr/sbin/sshd -t || sudo chroot /mnt service ssh start
 
         sudo chroot /mnt /usr/sbin/sshd -t || {
@@ -27,8 +28,7 @@ runs:
           exit 1
         }
 
-    - name: Check for ip
-      run: |
+        ## Check for ip ##
         IP_ADDRESS=$(sudo chroot /mnt hostname -I | awk '{print $1}')
         if [ -n "$IP_ADDRESS" ]; then
           echo "Адрес: pi@$IP_ADDRESS"
