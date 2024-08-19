@@ -20,9 +20,7 @@ runs:
         sudo chroot /mnt cat /etc/passwd
         sudo chroot /mnt cat /etc/hosts
 
-        ## check ssh service ##
-        Start and check sh service
-
+        ## check sh service ##
         sudo chroot /mnt /usr/sbin/sshd -t || sudo chroot /mnt service ssh start
         sudo chroot /mnt /usr/sbin/sshd -t || {
           echo "Не удалось запустить SSH" >&2
