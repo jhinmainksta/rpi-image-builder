@@ -7,22 +7,22 @@ inputs:
 runs:
   using: composite
   steps:
-  - name: Prepare image
+    - name: Prepare image
       shell: bash
       run: |
-      ## Get an image ##
-        wget ${{ inputs.zip-image-path }}
-        xz -d *img.xz
-        mv *img raspios.img
+        ## Get an image ##
+          wget ${{ inputs.zip-image-path }}
+          xz -d *img.xz
+          mv *img raspios.img
 
-      ## Install required packages ##
-      run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static
+        ## Install required packages ##
+        run: sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static
 
-      ## Load nbd kernel module ##
-      run: sudo modprobe nbd max_part=8
+        ## Load nbd kernel module ##
+        run: sudo modprobe nbd max_part=8
 
-      ## Connect the image to nbd ##
-      run: sudo qemu-nbd --connect=/dev/nbd0 --format=raw raspios.img
+        ## Connect the image to nbd ##
+        run: sudo qemu-nbd --connect=/dev/nbd0 --format=raw raspios.img
 
-      ## Install openssh-server on image ##
-      run: sudo chroot /mnt sudo apt-get update && sudo apt-get install -y openssh-server
+        ## Install openssh-server on image ##
+        run: sudo chroot /mnt sudo apt-get update && sudo apt-get install -y openssh-server
