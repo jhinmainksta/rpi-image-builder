@@ -1,0 +1,17 @@
+name: "set-time-zone"
+description: "set-time-zone"
+inputs:
+  time-zone:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - name: set-time-zone
+      shell: bash
+      run: |
+
+        sudo chroot /mnt timedatectl set-npt on
+        sudo chroot /mnt timedatectl set-timezone ${{ time-zone }}
+        sudo chroot /mnt timedatectl
