@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    environment: secrets
+    environment: testus
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -23,8 +23,8 @@ jobs:
       - name: configure-image
         uses: ./.github/actions/configure-image
         with:
-          username: ${{ secrets.DEF_USERNAME }}
-          password: ${{ secrets.DEF_PASSWORD }}
+          username: ${{ env.DEF_USERNAME }}
+          password: ${{ env.DEF_PASSWORD }}
 
       - name: set-time-zone
         uses: ./.github/actions/set-time-zone

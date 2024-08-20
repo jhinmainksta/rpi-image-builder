@@ -13,5 +13,5 @@ runs:
       run: |
 
         sudo chroot /mnt timedatectl set-npt on
-        sudo chroot /mnt timedatectl set-timezone ${{ time-zone }}
+        sudo chroot /mnt timedatectl set-timezone ${{ inputs.time-zone }}
         sudo chroot /mnt timedatectl
