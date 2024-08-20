@@ -9,6 +9,7 @@ on:
 
 jobs:
   build:
+    environment: secrets
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,8 +23,8 @@ jobs:
       - name: configure-image
         uses: ./.github/actions/configure-image
         with:
-          username: ${{ env.secrets.DEF_USERNAME }}
-          password: ${{ env.secrets.DEF_PASSWORD }}
+          username: ${{ secrets.DEF_USERNAME }}
+          password: ${{ secrets.DEF_PASSWORD }}
 
       - name: set-time-zone
         uses: ./.github/actions/set-time-zone
