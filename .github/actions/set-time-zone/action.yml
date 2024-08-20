@@ -12,6 +12,5 @@ runs:
       shell: bash
       run: |
 
-        sudo chroot /mnt timedatectl set-npt on
-        sudo chroot /mnt timedatectl set-timezone ${{ inputs.time-zone }}
-        sudo chroot /mnt timedatectl
+        sudo ln -sf /usr/share/zoneinfo/${{ inputs.time-zone }} /etc/localtime
+        sudo chroot /mnt timedatectl || sudo chroot /mnt date
