@@ -12,5 +12,6 @@ runs:
       shell: bash
       run: |
 
-        sudo ln -sf /usr/share/zoneinfo/${{ inputs.time-zone }} /etc/localtime
-        sudo chroot /mnt timedatectl || sudo chroot /mnt date
+        sudo chroot /mnt rm -rf /etc/localtime
+        sudo chroot /mnt ln -sf /usr/share/zoneinfo/${{ inputs.time-zone }} /etc/localtime
+        sudo chroot /mnt date
