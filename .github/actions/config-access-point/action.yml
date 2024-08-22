@@ -28,7 +28,7 @@ runs:
         sudo mv iptables.ipv4.nat /mnt/etc
         echo "iptables is setted"
 
-        sudo chroot /mnt ehco 'up iptables-restore < /etc/iptables.ipv4.nat' > /etc/network/interfaces.d/iptables
+        sudo chroot /mnt echo 'up iptables-restore < /etc/iptables.ipv4.nat' > /etc/network/interfaces.d/iptables
 
         sudo chroot /mnt sh -c "systemctl enable hostapd" || { echo "an error occured while enabling hostapd";exit 1; }
         sudo chroot /mnt sh -c "systemctl enable dnsmasq" || { echo "an error occured while enabling dnsmasq";exit 1; }
