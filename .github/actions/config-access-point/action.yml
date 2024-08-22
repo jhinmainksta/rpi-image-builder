@@ -12,7 +12,7 @@ runs:
         sudo chroot /mnt sudo sh -c "echo country=RU >> /etc/wpa_supplicant/wpa_supplicant.conf" 
 
 
-        sudo chroot /mnt sudo apt-get install -y hostapd dnsmasq
+        sudo chroot /mnt sudo apt-get install -y hostapd dnsmasq iptables
 
         ## disable services working with network ##
         sudo chroot /mnt sudo sh -c "systemctl disable NetworkManager"
