@@ -28,9 +28,6 @@ runs:
         sudo mv iptables.ipv4.nat /mnt/etc
         echo "iptables is setted"
 
-        ## save settings ##
-        sudo chroot /mnt sh -c "iptables-save > /etc/iptables.ipv4.nat"
-
         sudo chroot /mnt ehco 'up iptables-restore < /etc/iptables.ipv4.nat' > /etc/network/interfaces.d/iptables
 
         sudo chroot /mnt sh -c "systemctl enable hostapd" || { echo "an error occured while enabling hostapd";exit 1; }
