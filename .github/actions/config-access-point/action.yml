@@ -27,7 +27,7 @@ runs:
         ## setup the routing tables between wlan and ethernet ##
         sudo mv iptables.ipv4.nat /mnt/etc
         echo "iptables is setted"
-        sudo touch /mnt/etc/network/interfaces.d/iptables
+        sudo sh -c "touch /mnt/etc/network/interfaces.d/iptables"
         sudo chroot echo 'up iptables-restore < /etc/iptables.ipv4.nat' > /mnt/etc/network/interfaces.d/iptables
 
         ## enable hostapd and dnsmasq on boot ## 
