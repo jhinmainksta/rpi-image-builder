@@ -16,11 +16,15 @@ runs:
           exit 1
         fi
 
+        ## check AP ##
+        sudo chroot /mnt service hostapd status ||  echo "hostapd не запущен" >&2
+        sudo chroot /mnt service dnsmasq status ||  echo "dnsmasq не запущен" >&2
+
         ## check user list ##
         sudo chroot /mnt cat /etc/passwd
         sudo chroot /mnt cat /etc/hosts
 
-        ## check sh service ##
+        ## check ssh service ##
         sudo chroot /mnt /usr/sbin/sshd -t || sudo chroot /mnt service ssh start
         sudo chroot /mnt /usr/sbin/sshd -t || {  echo "ssh service is not running"; exit 1; }
 
