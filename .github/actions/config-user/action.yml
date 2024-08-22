@@ -18,12 +18,14 @@ runs:
         ## Initialize username and password variables ##
         USERNAME=${{ inputs.username }}
         PASSWORD=${{ inputs.password }}
+        echo $USERNAME
+        echo $PASSWORD
 
         ## Delete $USERNAME with his directory /home/$USERNAME if exist ##
         sudo chroot /mnt sudo userdel -r $USERNAME || echo "user $USERNAME doesn't exist"
 
         ## Create $USERNAME with $PASSWORD password ##
-        sudo chroot /mnt sudo useradd -p $(echo $PASSWORD | openssl passwd -6 -stdin) -s /bin/bash -m $USERNAME || { echo "an error occured while creating $USERNAME"; exit 1; }
+        sudo chroot /mnt useradd -p $(echo $PASSWORD | openssl passwd -6 -stdin) -s /bin/bash -m $USERNAME || { echo "an error occured while creating $USERNAME"; exit 1; }
           
         ## Add $USERNAME to groups ##
         sudo chroot /mnt sudo usermod -aG sudo,adm,cdrom,users,input,render,gpio,i2c,spi $USERNAME || { echo "an error occured while adding user to groups"; exit 1; }
