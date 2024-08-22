@@ -11,11 +11,11 @@ runs:
         ## ? ##
         sudo chroot /mnt sudo sh -c "echo country=RU >> /etc/wpa_supplicant/wpa_supplicant.conf" 
 
-        ## disable services working with network ##
-        sudo chroot /mnt sudo sh -c "systemctl disable NetworkManager"
-        sudo chroot /mnt sudo sh -c "systemctl stop NetworkManager" 
 
         sudo chroot /mnt sudo apt-get install -y hostapd dnsmasq
+
+        ## disable services working with network ##
+        sudo chroot /mnt sudo sh -c "systemctl disable NetworkManager"
 
         unzip network-settings
         sudo mv dnsmasq /mnt/etc/dnsmasq.d
