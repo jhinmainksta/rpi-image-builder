@@ -18,5 +18,5 @@ runs:
         sudo chroot /mnt ssh-keygen -A
 
         ## Run ssh ##
-        sudo chroot /mnt /usr/sbin/sshd -t|| { echo "an error occured while running ssh";exit 1; }
+        sudo chroot /mnt /usr/sbin/sshd -t || { echo "an error occured while running ssh";exit 1; }
         sudo chroot /mnt touch /boot/firmware/ssh
