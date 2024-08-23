@@ -23,6 +23,7 @@ runs:
         ## setup the routing tables between wlan and ethernet ##
         sudo mv iptables.ipv4.nat /mnt/etc
         sudo sed -i 's|exit 0|iptables-restore < /etc/iptables.ipv4.nat|' /mnt/etc/rc.local
+        sudo sh -c "echo 'rfkill unblock wlan0' >> /mnt/etc/rc.local"
         sudo sh -c "echo 'exit 0' >> /mnt/etc/rc.local"
 
         ## enable hostapd and dnsmasq on boot ## 
