@@ -17,7 +17,7 @@ runs:
         fi
 
         ## check for userconf file ##
-        if [ -f /mnt/boot/userconf ]; then
+        if [ -f /mnt/boot/firmware/userconf ]; then
           echo "Файл userconf найден"
         else
           echo "Файл userconf не найден" >&2
