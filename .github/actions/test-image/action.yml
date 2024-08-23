@@ -24,8 +24,8 @@ runs:
           exit 1
         fi
         ## check AP ##
-        sudo chroot /mnt service hostapd status ||  echo "hostapd не запущен" >&2
-        sudo chroot /mnt service dnsmasq status ||  echo "dnsmasq не запущен" >&2
+        sudo chroot /mnt service hostapd start ||  echo "hostapd не запущен" >&2
+        sudo chroot /mnt service dnsmasq start ||  echo "dnsmasq не запущен" >&2
 
         ## check user list ##
         sudo chroot /mnt cat /etc/passwd
