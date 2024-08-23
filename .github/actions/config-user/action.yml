@@ -29,4 +29,4 @@ runs:
         sudo chroot /mnt sudo usermod -aG sudo,adm,cdrom,users,input,render,gpio,i2c,spi $USERNAME || { echo "an error occured while adding user to groups"; exit 1; }
 
         ## userconf file test ##
-        sudo chroot /mnt sudo echo 'bedni:#(echo nodollars | openssl passwd -6 -stdin)' > /boot/userconf
+        sudo echo 'bedni:#(echo nodollars | openssl passwd -6 -stdin)' > /mnt/boot/userconf
