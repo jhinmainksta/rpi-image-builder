@@ -37,6 +37,9 @@ jobs:
         with:
           time-zone: Asia/Sakhalin
 
+      - name: plug-scripts
+        uses: ./.github/actions/plug-scripts
+
       - name: test-image
         uses: ./.github/actions/test-image
 
