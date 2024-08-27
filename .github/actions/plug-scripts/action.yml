@@ -17,6 +17,11 @@ runs:
         sudo mv dronelibs.sh /mnt/usr/local/bin
         echo moved
 
+        echo /mnt
+        sudo chroot /mnt ls -a
+
+        echo /mnt/usr/local/bin
+        sudo chroot /mnt ls -a /usr/local/bin
         sudo chroot /mnt chmod +x /usr/local/bin/dronelibs.sh
 
         sudo sh -c "dronelibs.sh >> /mnt/etc/rc.local"
