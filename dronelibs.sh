@@ -9,7 +9,7 @@ sudo apt-get remove modemmanager
 if ! [ -d drone ]; then
 	{ sudo python -m venv /usr/local/bin/drone; echo repo created; }
 else
-	echo  repo already exists 
+	{ echo repo already exists; exit 0; } 
 fi
 cd /usr/local/bin/drone/bin
 
