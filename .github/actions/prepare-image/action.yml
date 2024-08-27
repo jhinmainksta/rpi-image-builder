@@ -27,6 +27,3 @@ runs:
 
         ## Mount the image partition ##
         sudo mount /dev/nbd0p2 /mnt
-
-        ## Install openssh-server on image ##
-        sudo chroot /mnt sudo apt-get update && sudo apt-get install -y openssh-server

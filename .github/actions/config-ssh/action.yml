@@ -8,6 +8,9 @@ runs:
       shell: bash
       run: |
 
+        ## Install openssh-server on image ##
+        sudo chroot /mnt sudo apt-get update && sudo apt-get install -y openssh-server
+
         ## Enable ssh and login by password ##
         sudo chroot /mnt sh -c "sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config" || { echo "an error occured while setup ssh"; exit 1; }
         sudo chroot /mnt sh -c "systemctl enable ssh" || { echo "an error occured while enabling ssh";exit 1; }
@@ -16,7 +19,7 @@ runs:
         sudo chroot /mnt mkdir -p /run/sshd
         sudo chroot /mnt chmod 0755 /run/sshd
         sudo chroot /mnt ssh-keygen -A
+        sudo chroot /mnt touch /boot/firmware/ssh
 
         ## Run ssh ##
         sudo chroot /mnt /usr/sbin/sshd -t || { echo "an error occured while running ssh";exit 1; }
-        sudo chroot /mnt touch /boot/firmware/ssh
