@@ -15,6 +15,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: check dronelibs.sh
+        run: |
+
+          if ! [ -e  dronelibs.sh ]; then
+            exit 1
+          fi
+
       - name: prepare-image
         uses: ./.github/actions/prepare-image
         with:

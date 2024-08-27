@@ -11,7 +11,7 @@ source drone/bin/activate
 
 pip show pymavlink || { pip3 install pymavlink; pip show pymavlink; }
 pip show dronekit || { pip3 install dronekit; pip show dronekit; }
-pip show mavproxy || { pip3 install mavproxy; pip showmavproxy; }
+pip show mavproxy || { pip3 install mavproxy; pip show mavproxy; }
 
 mavproxy.py --master=/dev/ttyS0 --baudrate 57600 --aircraft MyCopter
 . ~/.bashrc
