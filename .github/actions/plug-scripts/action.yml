@@ -8,7 +8,7 @@ runs:
       shell: bash
       run: |
 
-        sudo mv dronelibs.sh /mnt/usr/local/bin/dronelibs.sh
+        sudo mv dronelibs.sh /mnt/usr/local/bin
         sudo chroot /mnt chmod +x /usr/local/bin/dronelibs.sh
         sudo sh -c "dronelibs.sh >> /mnt/etc/rc.local"
         sudo sh -c "echo 'exit 0' >> /mnt/etc/rc.local"

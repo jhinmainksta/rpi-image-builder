@@ -4,7 +4,7 @@ pip3 -V || { sudo apt-get install -y python3-pip; pip3 -V; }
 sudo apt-get remove modemmanager
 
 if ! [ -d drone ]; then
-	python -m venv drone
+	python -m venv /home/pi/drone
 fi
 
 source drone/bin/activate
