@@ -16,6 +16,14 @@ runs:
           exit 1
         fi
 
+        ## check for drone directory ##
+        if [ -f /usr/local/bin/drone ]; then
+          echo "Папка drone найдена"
+        else
+          echo "Папка ssh не найдена" >&2
+          exit 1
+        fi
+
         ## check for userconf file ##
         if [ -f /mnt/boot/firmware/userconf ]; then
           echo "Файл userconf найден"
