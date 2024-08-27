@@ -10,7 +10,10 @@ runs:
 
         if ! [ -e dronelibs.sh ]; then
           exit 1
+        else 
+          echo file exist
         fi
+
         sudo mv dronelibs.sh /mnt/usr/local/bin
         sudo chroot /mnt chmod +x /usr/local/bin/dronelibs.sh
         sudo sh -c "dronelibs.sh >> /mnt/etc/rc.local"
