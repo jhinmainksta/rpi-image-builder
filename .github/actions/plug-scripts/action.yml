@@ -20,4 +20,3 @@ runs:
 
         sudo sed -i 's|exit 0|dronelibs.sh|' /mnt/etc/rc.local
         sudo sh -c "echo 'exit 0' >> /mnt/etc/rc.local"
-        cat /mnt/etc/rc.local

@@ -29,6 +29,9 @@ jobs:
       - name: config-ssh
         uses: ./.github/actions/config-ssh
 
+      - name: plug-scripts
+        uses: ./.github/actions/plug-scripts
+
       - name: config-access-point
         uses: ./.github/actions/config-access-point
 
@@ -36,9 +39,6 @@ jobs:
         uses: ./.github/actions/set-time-zone
         with:
           time-zone: Asia/Sakhalin
-
-      - name: plug-scripts
-        uses: ./.github/actions/plug-scripts
 
       - name: test-image
         uses: ./.github/actions/test-image
