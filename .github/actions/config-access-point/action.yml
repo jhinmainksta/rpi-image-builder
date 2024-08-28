@@ -14,6 +14,7 @@ runs:
         sudo chroot /mnt apt-get install -y hostapd dnsmasq iptables
         unzip ifaces-setup
         sudo mv AllowIfupdown /mnt/etc/NetworkManager/conf.d
+        sudo mv wpa* /mnt/etc/wpa_supplicant
         sudo mv dnsmasq* /mnt/etc/dnsmasq.d
         sudo mv hostapd* /mnt/etc/hostapd
         sudo mv my_ifaces /mnt/etc/network/interfaces.d
