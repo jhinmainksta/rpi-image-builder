@@ -11,11 +11,7 @@ if ! [ -d drone ]; then
 else
 	echo  repo already exists 
 fi
-cd /usr/local/bin/drone/bin
 
 sudo /usr/local/bin/drone/bin/pip install pymavlink
 sudo /usr/local/bin/drone/bin/pip install dronekit
 sudo /usr/local/bin/drone/bin/pip install mavproxy
-
-mavproxy.py --master=/dev/ttyS0 --baudrate 57600 --aircraft MyCopter
-. ~/.bashrc
