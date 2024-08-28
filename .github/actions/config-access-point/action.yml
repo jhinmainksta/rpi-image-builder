@@ -14,8 +14,8 @@ runs:
         sudo chroot /mnt apt-get install -y hostapd dnsmasq iptables
 
         unzip network-settings
-        sudo mv dnsmasq /mnt/etc/dnsmasq.d
-        sudo mv hostapd.conf /mnt/etc/hostapd
+        sudo mv dnsmasq* /mnt/etc/dnsmasq.d
+        sudo mv hostapd* /mnt/etc/hostapd
         sudo mv wlan0 /mnt/etc/network/interfaces.d
 
         sudo chroot /mnt sed -i 's|#net.ipv4.ip_forward=1|net.ipv4.ip_forward=1|' /etc/sysctl.conf
