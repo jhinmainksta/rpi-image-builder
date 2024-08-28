@@ -29,11 +29,11 @@ jobs:
       - name: config-ssh
         uses: ./.github/actions/config-ssh
 
-      - name: plug-scripts
-        uses: ./.github/actions/plug-scripts
-
       - name: config-access-point
         uses: ./.github/actions/config-access-point
+
+      - name: plug-scripts
+        uses: ./.github/actions/plug-scripts
 
       - name: set-time-zone
         uses: ./.github/actions/set-time-zone
