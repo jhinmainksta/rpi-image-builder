@@ -8,13 +8,11 @@ runs:
       shell: bash
       run: |
 
-        ## ? ##
         sudo chroot /mnt sh -c "echo country=RU >> /etc/wpa_supplicant/wpa_supplicant.conf" 
 
         sudo chroot /mnt apt-get install -y hostapd dnsmasq iptables
-        unzip ifaces-setup
-        ## sudo mv AllowIfupdown /mnt/etc/NetworkManager/conf.d
-        sudo mv wpa* /mnt/etc/wpa_supplicant
+
+        unzip ifaces-config
         sudo mv dnsmasq* /mnt/etc/dnsmasq.d
         sudo mv hostapd* /mnt/etc/hostapd
         sudo mv my_ifaces /mnt/etc/network/interfaces.d
@@ -24,6 +22,7 @@ runs:
         ## setup the routing tables between wlan and ethernet ##
         sudo mv iptables.ipv4.nat /mnt/etc
         sudo sed -i 's|exit 0|iptables-restore < /etc/iptables.ipv4.nat|' /mnt/etc/rc.local
+        sudo sh -c "echo 'rfkill unblock wlan0' >> /mnt/etc/rc.local"
         sudo sh -c "echo 'exit 0' >> /mnt/etc/rc.local"
 
         ## enable hostapd and dnsmasq on boot ## 
