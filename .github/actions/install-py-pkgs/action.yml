@@ -9,7 +9,7 @@ runs:
       run: |
 
         ## Check for instruments, create project with venv
-        mv dronelibs.sh /mnt/usr
+        sudo mv dronelibs.sh /mnt/usr
         sudo sed -i 's|exit 0|/mnt/usr/dronelibs.sh|' /mnt/etc/rc.local
         sudo echo exit 0 >> /mnt/etc/rc.local
         sudo chroot mnt chmod +x /etc/rc.local
