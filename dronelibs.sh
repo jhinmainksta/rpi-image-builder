@@ -7,7 +7,7 @@ fi
 python3 -V || sudo apt-get install -y python3
 pip3 -V || sudo apt-get install -y python3-pip
 
-ssudo python -m venv /usr/drone
+sudo python -m venv /usr/drone
 
 sudo /usr/drone/bin/pip install pymavlink
 sudo /usr/drone/bin/pip install dronekit
