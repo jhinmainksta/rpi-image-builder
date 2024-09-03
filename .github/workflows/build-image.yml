@@ -35,7 +35,7 @@ jobs:
         uses: ./.github/actions/config-ssh
 
       - name: install-py-pkgs
-        uses: ./.github/actions/plug-scripts
+        uses: ./.github/actions/install-py-pkgs
 
       - name: config-access-point
         uses: ./.github/actions/config-access-point
