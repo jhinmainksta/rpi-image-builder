@@ -10,21 +10,15 @@ runs:
 
         sudo chroot /mnt sh -c "echo country=RU >> /etc/wpa_supplicant/wpa_supplicant.conf" 
 
-        sudo chroot /mnt apt-get install -y hostapd dnsmasq iptables
+        sudo chroot /mnt apt-get install -y hostapd dnsmasq
 
-        unzip ifaces-config
+        unzip ap-cfgs
         sudo mv dnsmasq* /mnt/etc/dnsmasq.d
         sudo mv hostapd* /mnt/etc/hostapd
-        sudo mv my_ifaces /mnt/etc/network/interfaces.d
-
-        sudo chroot /mnt sed -i 's|#net.ipv4.ip_forward=1|net.ipv4.ip_forward=1|' /etc/sysctl.conf
-
-        ## setup the routing tables between wlan and ethernet ##
-        sudo mv iptables.ipv4.nat /mnt/etc
-        sudo sed -i 's|exit 0|iptables-restore < /etc/iptables.ipv4.nat|' /mnt/etc/rc.local
-        sudo sh -c "echo 'rfkill unblock wlan0' >> /mnt/etc/rc.local"
-        sudo sh -c "echo 'exit 0' >> /mnt/etc/rc.local"
+        sudo mv ifaces /mnt/etc/network/interfaces.d
+        sudo sed -i 's|#DAEMON_CONF=""|DAEMON_CONF"/etc/hostapd/hostapd.conf"|' /mnt/etc/default/hostapd
 
         ## enable hostapd and dnsmasq on boot ## 
+        sudo chroot /mnt sh -c "systemctl unmask hostapd" || { echo "an error occured while enabling hostapd";exit 1; }
         sudo chroot /mnt sh -c "systemctl enable hostapd" || { echo "an error occured while enabling hostapd";exit 1; }
         sudo chroot /mnt sh -c "systemctl enable dnsmasq" || { echo "an error occured while enabling dnsmasq";exit 1; }

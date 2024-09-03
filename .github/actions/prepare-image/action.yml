@@ -12,9 +12,9 @@ runs:
       run: |
 
         ## Get an image ##
-          wget ${{ inputs.zip-image-path }}
-          xz -d *img.xz
-          mv *img raspios.img
+        wget ${{ inputs.zip-image-path }}
+        xz -d *img.xz
+        mv *img raspios.img
 
         ## Install required packages ## 
         sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static
@@ -27,3 +27,6 @@ runs:
 
         ## Mount the image partition ##
         sudo mount /dev/nbd0p2 /mnt
+
+        ## Update
+        sudo chroot /mnt apt-get update
