@@ -15,3 +15,7 @@ runs:
 
         sudo chroot /mnt sh -c "sed -i 's|exit 0|dronelibs.sh|' /etc/rc.local"
         sudo chroot /mnt sh -c "echo exit 0 >> /etc/rc.local"
+
+        ## enable gpio/fix Error: Could not open port /dev/ttyS0
+        sudo chroot /mnt sed -i "s/#dtparam=i2c_arm=on/dtparam=i2c_arm=on/" /boot/firmware/config.txt
+        sudo chroot /mnt sh -c "echo enable_uart =1>> /boot/firmware/config.txt"

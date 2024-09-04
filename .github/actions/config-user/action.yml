@@ -26,4 +26,4 @@ runs:
         sudo chroot /mnt useradd -p $(echo $PASSWORD | openssl passwd -6 -stdin) -s /bin/bash -m $USERNAME || { echo "an error occured while creating $USERNAME"; exit 1; }
           
         ## Add $USERNAME to groups ##
-        sudo chroot /mnt usermod -aG sudo,adm,cdrom,users,input,render,gpio,i2c,spi $USERNAME
+        sudo chroot /mnt usermod -aG adm,dialout,cdrom,sudo,audio,video,plugdev,games,users,input,render,netdev,gpio,i2c,spi,tty  $USERNAME
