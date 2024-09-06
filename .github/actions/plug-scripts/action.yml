@@ -10,6 +10,7 @@ runs:
 
         ## Give rights to rc.local
         sudo chroot /mnt chmod +x /etc/rc.local
+        sudo chmod +x scripts/pluger.sh
 
         ## Plug script that installs py packages on boot
         scripts/pluger.sh scripts/dronelibs.sh usr/local/bin /mnt
