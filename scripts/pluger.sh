@@ -9,7 +9,7 @@ fi
 
 echo need to move $file file into $directory directory of imager mounter in $mounted_point
 
-mv $file $mounted_point/$directory || { echo "ne poluchilos' zasunut $file v $directory("; exit 1; }
+sudo mv $file $mounted_point/$directory || { echo "ne poluchilos' zasunut $file v $directory("; exit 1; }
 ls $mounted_point/$directory/$file
 
 echo razdacha prav dlya $file
