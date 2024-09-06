@@ -6,6 +6,7 @@ mounted_point=$3
 if [ ! -f $PWD/$file ]; then
   { echo $file ne sushestvuet, kakov pozor; exit 1; }
 fi
+echo $mounted_point
 if [ $mounted_point != "" ]; then
   way=$PWD/$mounted_point/$directory
 else
