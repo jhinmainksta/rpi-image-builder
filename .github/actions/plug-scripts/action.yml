@@ -1,0 +1,19 @@
+name: "plug-scripts"
+description: "plug-scripts"
+
+runs:
+  using: composite
+  steps:
+    - name: prepare image
+      shell: bash
+      run: |
+
+        ## Give rights to rc.local
+        sudo chroot /mnt chmod +x /etc/rc.local
+
+        ## Plug script that installs py packages on boot
+        scripts/mover scripts/dronelibs.sh usr/local/bin /mnt
+
+        ## enable gpio/fix Error: Could not open port /dev/ttyS0
+        ## Plug script that enables gpio after boot and reboot
+        scripts/mover scripts/gpioenable.sh usr/local/bin /mnt
