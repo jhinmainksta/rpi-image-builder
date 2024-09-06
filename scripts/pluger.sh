@@ -6,15 +6,6 @@ mounted_point=$3
 if [ ! -f $PWD/$file ]; then
   { echo $file ne sushestvuet, kakov pozor; exit 1; }
 fi
-echo $mounted_point
-if [ $mounted_point != "" ]; then
-  way=$PWD/$mounted_point/$directory
-else
-  way=$PWD/$directory
-fi
-if [ ! -d $way ]; then
-  { echo "a kak popast' v $directory? freekus?"; exit 1; }
-fi
 
 echo need to move $file file into $directory directory of imager mounter in $mounted_point
 
