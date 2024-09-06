@@ -30,3 +30,4 @@ runs:
 
         ## Update
         sudo chroot /mnt apt-get update
+        sudo ls
