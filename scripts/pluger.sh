@@ -6,8 +6,12 @@ mounted_point=$3
 if [ ! -f $PWD/$file ]; then
   { echo $file ne sushestvuet, kakov pozor; exit 1; }
 fi
-
-if [ ! -d $PWD/$directory ]; then
+if [ $mounted_point != "" ]; then
+  way=$PWD/$mounted_point/$directory
+else
+  way=$PWD/$directory
+fi
+if [ ! -d $way ]; then
   { echo "a kak popast' v $directory? freekus?"; exit 1; }
 fi
 
