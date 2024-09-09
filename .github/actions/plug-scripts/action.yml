@@ -16,7 +16,7 @@ runs:
         sudo chroot /mnt sh -c "sed -i 's|exit 0|dronelibs.sh|' /etc/rc.local"
         sudo chroot /mnt sh -c "echo exit 0 >> /etc/rc.local"
 
-        ## enable gpio/fix Error: Could not open port /dev/ttyS0
+        ## enable gpio/uart
         sudo mv scripts/gpioenable.sh /mnt/usr/local/bin
         sudo chroot /mnt chmod +x /usr/local/bin/gpioenable.sh
         sudo chroot /mnt sh -c "sed -i 's|exit 0|gpioenable.sh|' /etc/rc.local"
