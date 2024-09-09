@@ -8,14 +8,16 @@ runs:
       shell: bash
       run: |
 
-        ## Give rights to rc.local
         sudo chroot /mnt chmod +x /etc/rc.local
-        sudo chmod +x scripts/pluger.sh
-        sudo cp -a scripts .
-        sudo ls
-        ## Plug script that installs py packages on boot
-        scripts/pluger.sh dronelibs.sh usr/local/bin /mnt
+
+        ## plug script installing py packages
+        sudo mv scripts/dronelibs.sh /mnt/usr/local/bin
+        sudo chroot /mnt chmod +x /usr/local/bin/dronelibs.sh
+        sudo chroot /mnt sh -c "sed -i 's|exit 0|dronelibs.sh|' /etc/rc.local"
+        sudo chroot /mnt sh -c "echo exit 0 >> /etc/rc.local"
 
         ## enable gpio/fix Error: Could not open port /dev/ttyS0
-        ## Plug script that enables gpio after boot and reboot
-        scripts/pluger.sh gpioenable.sh usr/local/bin /mnt
+        sudo mv scripts/gpioenable.sh /mnt/usr/local/bin
+        sudo chroot /mnt chmod +x /usr/local/bin/gpioenable.sh
+        sudo chroot /mnt sh -c "sed -i 's|exit 0|gpioenagle.sh|' /etc/rc.local"
+        sudo chroot /mnt sh -c "echo exit 0 >> /etc/rc.local"
