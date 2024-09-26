@@ -13,11 +13,11 @@ runs:
 
         ## Get an image ##
         wget ${{ inputs.zip-image-path }}
-        # xz -d *img.xz
-        # mv *img raspios.img  
 
+        # xz -d *img.xz               
         unzip *lite.zip
-        mv *lite raspios.img
+
+        mv *img raspios.img
 
         ## Install required packages ## 
         sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static
