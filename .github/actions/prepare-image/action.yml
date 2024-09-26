@@ -16,8 +16,8 @@ runs:
         # xz -d *img.xz
         # mv *img raspios.img  
 
-        unzip *zip
-        mv *zip raspios.img
+        unzip *lite.zip
+        mv *lite raspios.img
 
         ## Install required packages ## 
         sudo apt-get update && sudo apt-get install -y qemu-utils qemu-user-static
